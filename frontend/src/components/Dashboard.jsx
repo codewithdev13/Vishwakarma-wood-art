@@ -44,7 +44,7 @@ const Dashboard = ({ setAuth }) => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.post('/api/products/add', formPayload, {
+      await axios.post('/products/add', formPayload, {
         headers: {
           Authorization: `Bearer ${token}`
         }

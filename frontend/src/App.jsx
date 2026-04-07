@@ -7,7 +7,7 @@ import Admin from './pages/Admin';
 import { WOOD_TYPES, SIZES, TEMPLE_STYLES } from './constants/productOptions';
 
 // Set dynamic base URL for production APIs (Vercel) vs local dev
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+axios.defaults.baseURL = '/api';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -36,7 +36,7 @@ function App() {
         if (selectedStyle) params.append('style', selectedStyle);
         if (selectedSize) params.append('size', selectedSize);
 
-        const { data } = await axios.get(`/api/products?${params.toString()}`);
+        const { data } = await axios.get(`/products?${params.toString()}`);
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -63,7 +63,7 @@ function App() {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
     try {
       const token = localStorage.getItem('adminToken');
-      await axios.delete(`/api/products/${id}`, {
+      await axios.delete(`/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(prev => prev.filter(p => p._id !== id));
