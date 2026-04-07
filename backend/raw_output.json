@@ -1,0 +1,45 @@
+[dotenv@17.3.1] injecting env (5) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[
+  {
+    "_id": "69c29c4470f7abd9a3cab9db",
+    "name": "Handcrafted Teak Temple",
+    "price": 299.99,
+    "woodType": "Teak",
+    "description": "A beautiful hand-carved temple perfect for home altars.",
+    "stock": 5,
+    "__v": 0,
+    "createdAt": "2026-03-24T14:14:28.380Z",
+    "updatedAt": "2026-03-24T14:14:28.380Z"
+  },
+  {
+    "_id": "69c29c4470f7abd9a3cab9dc",
+    "name": "Rosewood Miniature Shrine",
+    "price": 150,
+    "woodType": "Rosewood",
+    "description": "Compact and elegant turned-wood shrine.",
+    "stock": 12,
+    "__v": 0,
+    "createdAt": "2026-03-24T14:14:28.381Z",
+    "updatedAt": "2026-03-24T14:14:28.381Z"
+  },
+  {
+    "_id": "69c29c4470f7abd9a3cab9dd",
+    "name": "Sandalwood Premium Altar",
+    "price": 899.5,
+    "woodType": "Sandalwood",
+    "description": "Luxurious sandalwood finish, intricately designed.",
+    "stock": 2,
+    "__v": 0,
+    "createdAt": "2026-03-24T14:14:28.381Z",
+    "updatedAt": "2026-03-24T14:14:28.381Z"
+  },
+  {
+    "_id": "69c4e45b8abb4be8b6b58c42",
+    "name": "21 * 15 (DOOR)",
+    "price": 1500,
+    "woodType": "Teak",
+    "createdAt": "2026-03-26T07:46:35.775Z",
+    "updatedAt": "2026-03-26T07:46:35.775Z",
+    "__v": 0
+  }
+]
