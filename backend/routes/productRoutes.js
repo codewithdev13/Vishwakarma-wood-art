@@ -52,9 +52,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// @route   POST /api/products/add
+// @route   POST /api/products
 // @desc    Add a new product with images
-router.post('/add', adminAuth, upload.array('images', 3), async (req, res) => {
+router.post('/', adminAuth, upload.array('images', 3), async (req, res) => {
   try {
     const { name, woodType, price, size, templeStyle } = req.body;
     let images = [];
