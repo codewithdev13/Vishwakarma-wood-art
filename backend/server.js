@@ -26,6 +26,12 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("Global Server Error:", err);
+  res.status(500).json({ message: err.message || 'Internal Server Error' });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
