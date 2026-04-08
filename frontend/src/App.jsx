@@ -7,7 +7,7 @@ import Admin from './pages/Admin';
 import { WOOD_TYPES, SIZES, TEMPLE_STYLES } from './constants/productOptions';
 
 // Set dynamic base URL for production APIs (Vercel) vs local dev
-axios.defaults.baseURL = '/api';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || '/api';
 
 function App() {
   const [products, setProducts] = useState([]);
