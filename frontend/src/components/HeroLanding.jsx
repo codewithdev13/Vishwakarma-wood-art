@@ -13,7 +13,7 @@ const HeroLanding = () => {
       {/* Background Image - Live Wood Carving */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105"
-        style={{ backgroundImage: "url('/hero_woodcarving_bg.png')" }}
+        style={{ backgroundImage: "url('/ram_mandir_bg.png')" }}
       />
       {/* Darkened Overlay to ensure text pops and imagery feels moody/authentic */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80 backdrop-blur-[1px]"></div>
