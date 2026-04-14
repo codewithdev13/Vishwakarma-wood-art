@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import imageCompression from 'browser-image-compression';
 import { WOOD_TYPES, SIZES, TEMPLE_STYLES } from '../constants/productOptions';
 
 const Dashboard = ({ setAuth }) => {
@@ -35,12 +36,25 @@ const Dashboard = ({ setAuth }) => {
     formPayload.append('price', formData.price);
     if (formData.size) formPayload.append('size', formData.size);
     if (formData.templeStyle) formPayload.append('templeStyle', formData.templeStyle);
-    
-    images.forEach((img) => {
-      if (img) {
-        formPayload.append('images', img);
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1200,
+      useWebWorker: true
+    };
+
+    try {
+      for (const img of images) {
+        if (img) {
+          const compressedFile = await imageCompression(img, options);
+          formPayload.append('images', compressedFile, img.name);
+        }
       }
-    });
+    } catch (err) {
+      setMessage('Error compressing images. Please try again.');
+      setLoading(false);
+      return;
+    }
 
     try {
       const token = localStorage.getItem('adminToken');
