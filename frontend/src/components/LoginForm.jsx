@@ -10,7 +10,7 @@ const LoginForm = ({ setAuth }) => {
     e.preventDefault();
     try {
       const { data } = await axios.post('/api/auth/login', { username, password });
-      localStorage.setItem('adminToken', data.token);
+      sessionStorage.setItem('adminToken', data.token);
       setAuth(true);
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid credentials');

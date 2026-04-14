@@ -57,7 +57,7 @@ const Dashboard = ({ setAuth }) => {
     }
 
     try {
-      const token = localStorage.getItem('adminToken');
+      const token = sessionStorage.getItem('adminToken');
       await axios.post('/api/products', formPayload, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -79,7 +79,7 @@ const Dashboard = ({ setAuth }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
+    sessionStorage.clear();
     setAuth(false);
   };
 

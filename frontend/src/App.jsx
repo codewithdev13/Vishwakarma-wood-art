@@ -24,7 +24,7 @@ function App() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   useEffect(() => {
-    setIsAdmin(!!localStorage.getItem('adminToken'));
+    setIsAdmin(!!sessionStorage.getItem('adminToken'));
   }, []);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function App() {
   const handleDeleteProduct = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
     try {
-      const token = localStorage.getItem('adminToken');
+      const token = sessionStorage.getItem('adminToken');
       await axios.delete(`/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
