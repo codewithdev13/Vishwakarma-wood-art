@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import ProductImageLightbox from '../components/ProductImageLightbox';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -65,17 +67,22 @@ const ProductDetails = () => {
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
 
           {/* Image Gallery Column */}
-          <div className="md:w-1/2 p-6 md:p-10 bg-stone-50 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col">
-            <div className="w-full aspect-square rounded-2xl overflow-hidden bg-white shadow-sm mb-6 flex items-center justify-center p-4">
+          <div className="md:w-1/2 p-6 md:p-10 bg-stone-50 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col min-h-0">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(true)}
+              className="group w-full rounded-2xl overflow-hidden bg-white shadow-sm mb-6 flex items-center justify-center max-md:p-0 max-md:m-0 md:aspect-square md:p-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              aria-label="Open full-screen product image"
+            >
               <img
                 src={mainImage}
                 alt={product.name}
-                className="w-full h-full object-contain"
+                className="w-full h-auto max-h-[min(85vh,920px)] md:max-h-none md:h-full object-contain pointer-events-none group-hover:opacity-95 transition-opacity"
               />
-            </div>
+            </button>
 
             {images.length > 1 && (
-              <div className="flex gap-4 overflow-x-auto pb-2">
+              <div className="flex-shrink-0 flex gap-4 overflow-x-auto pb-2">
                 {images.map((img, idx) => (
                   <button
                     key={idx}
@@ -125,6 +132,16 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      {lightboxOpen && (
+        <ProductImageLightbox
+          images={images}
+          activeIndex={activeImageIndex}
+          onClose={() => setLightboxOpen(false)}
+          onSelectIndex={setActiveImageIndex}
+          alt={product.name}
+        />
+      )}
     </div>
   );
 };
