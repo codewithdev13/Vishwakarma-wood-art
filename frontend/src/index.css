@@ -17,3 +17,23 @@ body {
   color: var(--color-secondary);
   font-family: var(--font-sans);
 }
+
+/* ── Lightbox: maximise product image on every screen ── */
+@media (max-width: 768px) {
+  /* On mobile the lightbox image should span the full viewport width */
+  [aria-label="Product image viewer"] img {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* On desktop keep the image within the panel but use all available height */
+  [aria-label="Product image viewer"] [aria-label="Close"] ~ div img {
+    max-height: calc(94dvh - 100px);
+  }
+}
