@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import ProductImageLightbox from '../components/ProductImageLightbox';
+import { buildWhatsAppUrl } from '../constants/contact';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -49,8 +50,8 @@ const ProductDetails = () => {
   const mainImage = images[activeImageIndex];
 
   const handleWhatsApp = () => {
-    const textPart = `Hi, I am interested in this product: ${product.name}`;
-    const whatsappUrl = `https://wa.me/918780829804?text=${encodeURIComponent(textPart)}%0A%0A${mainImage}`;
+    const textPart = `Hi Vishwakarma Wood Art, I am interested in this product: ${product.name}`;
+    const whatsappUrl = buildWhatsAppUrl(textPart, mainImage);
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 

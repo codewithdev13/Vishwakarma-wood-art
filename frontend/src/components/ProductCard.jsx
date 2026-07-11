@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { buildWhatsAppUrl } from '../constants/contact';
 
 const ProductCard = ({ product, isAdmin, onDelete }) => {
   const displayImage = (product.images && product.images.length > 0) ? product.images[0] : product.imageUrl;
@@ -8,8 +9,8 @@ const ProductCard = ({ product, isAdmin, onDelete }) => {
     e.preventDefault();
     const fallbackImage = 'https://images.unsplash.com/photo-1546200230-01ccceb38ab6?q=80&w=600&auto=format&fit=crop&text=Wooden+Texture';
     const imageUrl = displayImage || fallbackImage;
-    const textPart = `Hi, I am interested in this product: ${product.name}`;
-    const whatsappUrl = `https://wa.me/919510067135?text=${encodeURIComponent(textPart)}%0A%0A${imageUrl}`;
+    const textPart = `Hi Vishwakarma Wood Art, I am interested in this product: ${product.name}`;
+    const whatsappUrl = buildWhatsAppUrl(textPart, imageUrl);
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 

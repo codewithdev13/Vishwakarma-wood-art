@@ -64,7 +64,7 @@ function App() {
             <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm transition-all">
               <div className="max-w-7xl mx-auto py-4 px-6 flex justify-between items-center relative">
                 <h1 className="text-xl md:text-2xl font-heading font-extrabold text-wood-dark tracking-tight">
-                  Wooden Temples & Art
+                  Vishwakarma Wood Art
                 </h1>
                 
                 {/* Desktop Nav */}
@@ -72,9 +72,6 @@ function App() {
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
                     Premium Luxury
                   </p>
-                  <Link to="/admin" className="text-sm font-medium text-wood hover:text-wood-dark transition-colors">
-                    {isAdmin ? 'Manage Shop' : 'Admin Portal'}
-                  </Link>
                 </div>
 
                 {/* Mobile Hamburger Button */}
@@ -98,13 +95,6 @@ function App() {
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
                     Premium Luxury
                   </p>
-                  <Link 
-                    to="/admin" 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-base font-medium text-wood hover:text-wood-dark py-2"
-                  >
-                    {isAdmin ? 'Manage Shop' : 'Admin Portal Login'}
-                  </Link>
                 </div>
               )}
             </header>
@@ -132,10 +122,7 @@ function App() {
 
             <footer className="w-full border-t border-gray-200 bg-white py-6 mt-auto">
               <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-sm text-gray-500">
-                <p>&copy; {new Date().getFullYear()} Wooden Temples & Art. All rights reserved.</p>
-                <Link to="/admin" className="hover:text-wood-dark font-medium transition-colors">
-                  {isAdmin ? 'Manage Shop' : 'Admin Portal'}
-                </Link>
+                <p>&copy; {new Date().getFullYear()} Vishwakarma Wood Art. All rights reserved.</p>
               </div>
             </footer>
             

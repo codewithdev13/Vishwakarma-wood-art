@@ -24,7 +24,7 @@ const HeroLanding = () => {
           Vishwakarma Wood Art
         </h1>
         <p className="text-lg md:text-2xl text-stone-300 mb-12 max-w-3xl mx-auto font-light tracking-wide italic drop-shadow-xl border-t border-white/20 pt-4 mt-2">
-          Crafting Divine Sanctums for Your Home. Since [Insert Year Your Family Started].
+          Crafting Divine Sanctums for Your Home. Preserving generational woodcraft traditions.
         </p>
         
         {/* Luxury Prominent CTA Button - Dark Brown with Gold Text */}
