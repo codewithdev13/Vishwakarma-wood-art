@@ -6,6 +6,7 @@ const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    document.title = "Admin | Vishwakarma Wood Art";
     const token = sessionStorage.getItem('adminToken');
     if (token) {
       setIsAuthenticated(true);
@@ -13,7 +14,7 @@ const Admin = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       {!isAuthenticated ? (
         <LoginForm setAuth={setIsAuthenticated} />
       ) : (

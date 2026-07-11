@@ -84,22 +84,22 @@ const Dashboard = ({ setAuth }) => {
   };
 
   return (
-    <div className="max-w-4xl w-full bg-white shadow-xl rounded-2xl p-8">
-      <div className="flex justify-between items-center mb-8 border-b pb-4">
-        <h2 className="text-3xl font-bold text-wood-dark">Admin Dashboard</h2>
+    <div className="max-w-4xl w-full bg-background border border-primary/10 shadow-xl rounded-[2.5rem] p-8 text-text-primary">
+      <div className="flex justify-between items-center mb-8 border-b border-primary/10 pb-4">
+        <h2 className="text-3xl font-heading font-extrabold text-primary">Admin Dashboard</h2>
         <button
           onClick={handleLogout}
-          className="text-sm px-4 py-2 border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition-colors"
+          className="text-xs font-bold uppercase tracking-wider px-4 py-2 border border-red-200 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all cursor-pointer"
         >
           Logout
         </button>
       </div>
 
-      <div className="bg-gray-50 p-6 rounded-xl border border-gray-100">
-        <h3 className="text-xl font-semibold mb-4 text-gray-800">Add New Product</h3>
+      <div className="bg-background-alt p-6 rounded-2xl border border-primary/10">
+        <h3 className="text-xl font-heading font-bold mb-4 text-primary">Add New Product</h3>
         
         {message && (
-          <div className={`mb-4 p-3 rounded text-sm ${message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+          <div className={`mb-4 p-3 rounded-lg text-sm ${message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
             {message}
           </div>
         )}
@@ -107,23 +107,23 @@ const Dashboard = ({ setAuth }) => {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Product Name</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Product Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-wood-dark focus:ring-wood-dark sm:text-sm p-3 border"
+                className="mt-1 block w-full bg-background border-primary/20 rounded-xl shadow-sm focus:border-accent focus:ring-accent text-sm p-3 border outline-none transition-all duration-300"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Wood Type</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Wood Type</label>
               <select
                 name="woodType"
                 value={formData.woodType}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-wood-dark focus:ring-wood-dark sm:text-sm p-3 border bg-white"
+                className="mt-1 block w-full bg-background border-primary/20 rounded-xl shadow-sm focus:border-accent focus:ring-accent text-sm p-3 border outline-none transition-all duration-300 cursor-pointer"
                 required
               >
                 <option value="">Select Wood Type</option>
@@ -136,12 +136,12 @@ const Dashboard = ({ setAuth }) => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Size</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Size</label>
               <select
                 name="size"
                 value={formData.size}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-wood-dark focus:ring-wood-dark sm:text-sm p-3 border bg-white"
+                className="mt-1 block w-full bg-background border-primary/20 rounded-xl shadow-sm focus:border-accent focus:ring-accent text-sm p-3 border outline-none transition-all duration-300 cursor-pointer"
               >
                 <option value="">Select Size</option>
                 {SIZES.map(size => (
@@ -150,12 +150,12 @@ const Dashboard = ({ setAuth }) => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Temple Style</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Temple Style</label>
               <select
                 name="templeStyle"
                 value={formData.templeStyle}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-wood-dark focus:ring-wood-dark sm:text-sm p-3 border bg-white"
+                className="mt-1 block w-full bg-background border-primary/20 rounded-xl shadow-sm focus:border-accent focus:ring-accent text-sm p-3 border outline-none transition-all duration-300 cursor-pointer"
               >
                 <option value="">Select Style</option>
                 {TEMPLE_STYLES.map(style => (
@@ -166,19 +166,19 @@ const Dashboard = ({ setAuth }) => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700">Price (₹)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Price (₹)</label>
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="mt-1 block w-full md:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-wood-dark focus:ring-wood-dark sm:text-sm p-3 border"
+              className="mt-1 block w-full md:w-1/2 bg-background border-primary/20 rounded-xl shadow-sm focus:border-accent focus:ring-accent text-sm p-3 border outline-none transition-all duration-300"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Product Images (Up to 3)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Product Images (Up to 3)</label>
             <div className="space-y-3">
               {[0, 1, 2].map((i) => (
                 <input
@@ -187,7 +187,7 @@ const Dashboard = ({ setAuth }) => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => handleFileChange(i, e)}
-                  className="flex w-full md:w-1/2 items-center p-2 border border-gray-300 rounded-md shadow-sm sm:text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-wood file:text-white hover:file:bg-wood-dark cursor-pointer"
+                  className="flex w-full md:w-1/2 items-center p-2 border border-primary/20 rounded-xl shadow-sm text-sm text-text-muted bg-background file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-primary file:text-white hover:file:bg-primary/95 transition-all cursor-pointer"
                   required={i === 0}
                 />
               ))}
@@ -197,8 +197,8 @@ const Dashboard = ({ setAuth }) => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full md:w-auto px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white transition-colors
-              ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-wood-dark hover:bg-wood'}`}
+            className={`w-full md:w-auto px-6 py-3.5 rounded-xl shadow-md text-xs font-bold transition-all duration-300 uppercase tracking-wider cursor-pointer
+              ${loading ? 'bg-primary/40 text-white/60 cursor-not-allowed' : 'bg-accent text-primary hover:bg-accent/90'}`}
           >
             {loading ? 'Uploading...' : 'Publish Product'}
           </button>

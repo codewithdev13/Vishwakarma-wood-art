@@ -24,22 +24,22 @@ const StorefrontLayout = ({
   handleDeleteProduct
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50 relative">
+    <div className="min-h-screen flex flex-col bg-background relative text-text-primary">
       {/* Admin Bar */}
       {isAdmin && (
-        <div className="bg-wood-dark text-white px-6 py-2 flex justify-between items-center z-[100] relative text-sm shadow-md">
-          <div className="font-bold flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        <div className="bg-primary text-white px-6 py-2.5 flex justify-between items-center z-[100] relative text-sm shadow-md">
+          <div className="font-semibold flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
             Admin Mode Active
           </div>
           <div className="flex gap-4">
             <button 
               onClick={() => setShowAdminTable(true)} 
-              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-1 rounded transition-colors cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-1.5 rounded-lg transition-colors cursor-pointer text-xs font-semibold"
             >
               Manage Products
             </button>
-            <Link to="/admin" className="bg-white text-wood-dark px-3 py-1 rounded font-semibold hover:bg-gray-100 transition-colors">
+            <Link to="/admin" className="bg-accent text-primary px-4 py-1.5 rounded-lg font-bold hover:bg-accent/90 transition-colors text-xs shadow-sm">
               + Add New Product
             </Link>
           </div>
@@ -47,22 +47,22 @@ const StorefrontLayout = ({
       )}
 
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-gray-200 shadow-sm transition-all">
-        <div className="max-w-7xl mx-auto py-4 px-6 flex justify-between items-center relative">
-          <Link to="/" className="text-xl md:text-2xl font-heading font-extrabold text-wood-dark tracking-tight hover:text-wood transition-colors">
+      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/85 border-b border-primary/10 shadow-sm transition-all">
+        <div className="max-w-7xl mx-auto py-5 px-6 flex justify-between items-center relative">
+          <Link to="/" className="text-xl md:text-2xl font-heading font-extrabold text-primary tracking-tight hover:text-accent transition-colors">
             Vishwakarma Wood Art
           </Link>
           
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+            <span className="text-[10px] font-bold text-accent uppercase tracking-widest px-3 py-1 bg-primary/5 border border-accent/20 rounded-full select-none">
               Premium Luxury
-            </p>
+            </span>
             
             {/* Shortlist Header Button (Desktop) */}
             <button
               onClick={() => setIsShortlistOpen(true)}
-              className="relative p-2 text-stone-600 hover:text-rose-500 transition-colors flex items-center gap-1.5 focus:outline-none cursor-pointer"
+              className="relative p-2 text-text-muted hover:text-rose-500 transition-colors flex items-center gap-1.5 focus:outline-none cursor-pointer"
               title="View Shortlist"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.2" stroke="currentColor" className="w-6 h-6">
@@ -82,7 +82,7 @@ const StorefrontLayout = ({
             {/* Shortlist Header Button (Mobile) */}
             <button
               onClick={() => setIsShortlistOpen(true)}
-              className="relative p-2 text-stone-600 hover:text-rose-500 transition-colors flex items-center focus:outline-none cursor-pointer"
+              className="relative p-2 text-text-muted hover:text-rose-500 transition-colors flex items-center focus:outline-none cursor-pointer"
               title="View Shortlist"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.2" stroke="currentColor" className="w-6 h-6">
@@ -98,7 +98,7 @@ const StorefrontLayout = ({
             {/* Mobile Hamburger Button */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-600 hover:text-wood-dark cursor-pointer"
+              className="p-2 text-text-muted hover:text-primary cursor-pointer transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
                 {isMobileMenuOpen ? (
@@ -113,10 +113,10 @@ const StorefrontLayout = ({
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white absolute w-full top-full left-0 py-4 px-6 shadow-lg z-[60]">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+          <div className="md:hidden border-t border-primary/5 bg-background absolute w-full top-full left-0 py-5 px-6 shadow-lg z-[60] animate-fadeIn">
+            <span className="inline-block text-[10px] font-bold text-accent uppercase tracking-widest px-3 py-1 bg-primary/5 border border-accent/20 rounded-full select-none mb-3">
               Premium Luxury
-            </p>
+            </span>
           </div>
         )}
       </header>
@@ -127,8 +127,8 @@ const StorefrontLayout = ({
       </div>
 
       {/* Footer */}
-      <footer className="w-full border-t border-gray-200 bg-white py-6 mt-auto">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-sm text-gray-500">
+      <footer className="w-full border-t border-primary/10 bg-background-alt py-8 mt-auto text-text-muted transition-colors">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-sm">
           <p>&copy; {new Date().getFullYear()} Vishwakarma Wood Art. All rights reserved.</p>
         </div>
       </footer>
@@ -136,10 +136,10 @@ const StorefrontLayout = ({
       {/* Manage Products Modal */}
       {isAdmin && showAdminTable && (
         <div className="fixed inset-0 bg-black/60 z-[200] flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
-            <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-              <h2 className="text-2xl font-bold text-gray-800 font-heading">Inventory Management</h2>
-              <button onClick={() => setShowAdminTable(false)} className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
+          <div className="bg-background rounded-2xl shadow-2xl w-full max-w-5xl max-h-[85vh] overflow-hidden flex flex-col border border-primary/10">
+            <div className="p-6 border-b border-primary/10 flex justify-between items-center bg-background-alt">
+              <h2 className="text-2xl font-bold text-primary font-heading">Inventory Management</h2>
+              <button onClick={() => setShowAdminTable(false)} className="text-text-muted hover:text-red-500 transition-colors cursor-pointer p-1 rounded-full hover:bg-primary/5">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -147,35 +147,38 @@ const StorefrontLayout = ({
             </div>
             <div className="overflow-auto p-0 flex-grow">
               <table className="w-full text-left border-collapse text-sm">
-                <thead className="sticky top-0 bg-white shadow-sm z-10">
-                  <tr className="bg-stone-100 text-gray-600 uppercase tracking-wider">
-                    <th className="p-4 font-semibold border-b">Image</th>
-                    <th className="p-4 font-semibold border-b">Product Name</th>
-                    <th className="p-4 font-semibold border-b">Price</th>
-                    <th className="p-4 font-semibold border-b">Wood Type</th>
-                    <th className="p-4 font-semibold border-b text-right">Actions</th>
+                <thead className="sticky top-0 bg-background-alt shadow-sm z-10">
+                  <tr className="bg-primary/5 text-primary uppercase tracking-wider text-xs border-b border-primary/10">
+                    <th className="p-4 font-semibold">Image</th>
+                    <th className="p-4 font-semibold">Product Name</th>
+                    <th className="p-4 font-semibold">Price</th>
+                    <th className="p-4 font-semibold">Wood Type</th>
+                    <th className="p-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map(p => (
-                    <tr key={p._id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                    <tr key={p._id} className="border-b border-primary/5 hover:bg-primary/5 transition-colors">
                       <td className="p-3">
-                         <img src={(p.images && p.images.length > 0) ? p.images[0] : p.imageUrl} alt={p.name} className="w-12 h-12 rounded object-cover border" />
+                         <img src={(p.images && p.images.length > 0) ? p.images[0] : p.imageUrl} alt={p.name} className="w-12 h-12 rounded-lg object-cover border border-primary/10 bg-background" />
                       </td>
-                      <td className="p-4 font-medium text-gray-800">{p.name}</td>
-                      <td className="p-4 font-bold text-gray-900">₹{p.price.toLocaleString('en-IN')}</td>
-                      <td className="p-4 text-gray-600">
-                         <span className="px-2 py-1 bg-stone-200 text-stone-700 rounded-md text-xs">{p.woodType}</span>
+                      <td className="p-4 font-medium text-text-primary">{p.name}</td>
+                      <td className="p-4 font-bold text-primary">₹{p.price.toLocaleString('en-IN')}</td>
+                      <td className="p-4 text-text-muted">
+                         <span className="px-2.5 py-1 bg-background border border-primary/10 text-primary rounded-md text-xs font-medium">{p.woodType}</span>
                       </td>
                       <td className="p-4 text-right">
-                        <button onClick={() => handleDeleteProduct(p._id)} className="text-red-500 hover:text-red-700 hover:underline font-medium px-3 py-1 border border-red-200 rounded hover:bg-red-50 transition-colors cursor-pointer">
+                        <button 
+                          onClick={() => handleDeleteProduct(p._id)} 
+                          className="text-red-600 hover:text-white border border-red-200 rounded-lg hover:bg-red-600 font-semibold px-3 py-1 transition-all cursor-pointer text-xs"
+                        >
                           Delete Item
                         </button>
                       </td>
                     </tr>
                   ))}
                   {products.length === 0 && (
-                    <tr><td colSpan="5" className="p-8 text-center text-gray-500">Inventory is empty.</td></tr>
+                    <tr><td colSpan="5" className="p-8 text-center text-text-muted">Inventory is empty.</td></tr>
                   )}
                 </tbody>
               </table>

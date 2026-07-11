@@ -2,20 +2,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #d4af37;
-  --color-secondary: #1a1a1a;
-  --color-wood-light: #DEB887;
-  --color-wood: #8B4513;
-  --color-wood-dark: #5C3A21;
-  --color-warm: #FFF8EA;
+  --color-primary: #5c3a21;
+  --color-accent: #e6b35e;
+  --color-background: #faf7f2;
+  --color-background-alt: #fff8ea;
+  --color-text-primary: #2b2520;
+  --color-text-muted: #7a7067;
+  
+  /* Legacy/fallback definitions to ensure absolute compatibility */
+  --color-wood-dark: #5c3a21;
+  --color-wood: #8b4513;
+  --color-warm: #faf7f2;
+  --color-secondary: #2b2520;
+
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-heading: 'Playfair Display', serif;
 }
 
 body {
-  background-color: var(--color-warm);
-  color: var(--color-secondary);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
   font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading) !important;
+}
+
+/* Global focus styling for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 2px !important;
 }
 
 /* ── Lightbox: maximise product image on every screen ── */
