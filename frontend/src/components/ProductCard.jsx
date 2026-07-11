@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { openWhatsAppEnquiry } from '../utils/productShare';
 
-const ProductCard = ({ product, isAdmin, onDelete }) => {
+const ProductCard = ({ product, isAdmin, onDelete, isShortlisted, onToggleShortlist }) => {
   const displayImage = (product.images && product.images.length > 0) ? product.images[0] : product.imageUrl;
   
   const handleWhatsApp = (e) => {
@@ -22,6 +22,31 @@ const ProductCard = ({ product, isAdmin, onDelete }) => {
               e.target.src = 'https://images.unsplash.com/photo-1546200230-01ccceb38ab6?q=80&w=600&auto=format&fit=crop&text=Wooden+Texture';
             }}
           />
+          {/* Shortlist Heart Button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleShortlist(product);
+            }}
+            className={`absolute top-2 left-2 p-2 rounded-full transition-all shadow-sm border focus:outline-none z-10 cursor-pointer ${
+              isShortlisted 
+                ? 'bg-rose-50 border-rose-200 text-rose-500 hover:bg-rose-100' 
+                : 'bg-white/80 backdrop-blur-sm border-gray-200 text-stone-400 hover:text-rose-500 hover:bg-white'
+            }`}
+            title={isShortlisted ? "Remove from Shortlist" : "Add to Shortlist"}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill={isShortlisted ? "currentColor" : "none"} 
+              stroke="currentColor" 
+              strokeWidth="2.2" 
+              className="w-4.5 h-4.5 transition-transform duration-300 active:scale-125"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </button>
           {isAdmin && (
             <button
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(); }}

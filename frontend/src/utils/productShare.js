@@ -83,3 +83,20 @@ export const shareProduct = async (product, imageUrl) => {
   openWhatsAppEnquiry(product);
 };
 
+export const buildShortlistEnquiryMessage = (items) => {
+  let message = "Hi, I'm interested in the following shortlisted products:\n\n";
+  items.forEach((item, index) => {
+    const price = formatProductPrice(item.price);
+    const productUrl = buildProductUrl(item._id);
+    message += `${index + 1}. ${item.name} - ₹${price}\n   Link: ${productUrl}\n\n`;
+  });
+  return message.trim();
+};
+
+export const openShortlistWhatsAppEnquiry = (items) => {
+  const message = buildShortlistEnquiryMessage(items);
+  const whatsappUrl = buildWhatsAppUrl(message);
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+};
+
+

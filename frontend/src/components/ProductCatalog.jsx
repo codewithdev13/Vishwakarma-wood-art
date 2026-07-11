@@ -3,7 +3,7 @@ import axios from 'axios';
 import ProductCard from './ProductCard';
 import { WOOD_TYPES, SIZES, TEMPLE_STYLES } from '../constants/productOptions';
 
-const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOutside }) => {
+const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOutside, shortlist, onToggleShortlist }) => {
   const [loading, setLoading] = useState(true);
   
   // Filter States
@@ -158,6 +158,8 @@ const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOut
                 product={product} 
                 isAdmin={isAdmin}
                 onDelete={() => handleDeleteProduct(product._id)}
+                isShortlisted={shortlist ? shortlist.some(item => item._id === product._id) : false}
+                onToggleShortlist={onToggleShortlist}
               />
             ))}
             {products.length === 0 && (
