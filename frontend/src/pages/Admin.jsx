@@ -15,11 +15,11 @@ const Admin = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8 relative">
-      <div className="absolute top-6 left-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-4xl mb-4 flex justify-start">
         <Link 
           to="/" 
-          className="text-sm font-semibold text-text-muted hover:text-primary transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-primary/5"
+          className="text-sm font-semibold text-text-muted hover:text-primary transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-primary/5 border border-primary/10"
         >
           ← Back to Store
         </Link>

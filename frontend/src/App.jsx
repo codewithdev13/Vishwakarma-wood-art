@@ -54,7 +54,7 @@ const StorefrontLayout = ({
           </Link>
           
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-5">
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest px-3 py-1 bg-primary/5 border border-accent/20 rounded-full select-none">
               Premium Luxury
             </span>
@@ -65,7 +65,7 @@ const StorefrontLayout = ({
               className="relative p-2 text-text-muted hover:text-rose-500 transition-colors flex items-center gap-1.5 focus:outline-none cursor-pointer"
               title="View Shortlist"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.2" stroke="currentColor" className="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.2" stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
               </svg>
               <span className="text-sm font-semibold">Shortlist</span>
@@ -75,6 +75,18 @@ const StorefrontLayout = ({
                 </span>
               )}
             </button>
+
+            {/* Admin Portal Header Link (Desktop) */}
+            <Link
+              to="/admin"
+              className="text-text-muted hover:text-primary transition-colors flex items-center gap-1.5 text-sm font-semibold py-1.5 px-3 rounded-lg hover:bg-primary/5 border border-primary/10"
+              title="Admin Portal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span>Admin</span>
+            </Link>
           </div>
 
           {/* Mobile Actions */}
@@ -113,10 +125,20 @@ const StorefrontLayout = ({
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-primary/5 bg-background absolute w-full top-full left-0 py-5 px-6 shadow-lg z-[60] animate-fadeIn">
-            <span className="inline-block text-[10px] font-bold text-accent uppercase tracking-widest px-3 py-1 bg-primary/5 border border-accent/20 rounded-full select-none mb-3">
+          <div className="md:hidden border-t border-primary/5 bg-background absolute w-full top-full left-0 py-5 px-6 shadow-lg z-[60] animate-fadeIn flex flex-col gap-3">
+            <span className="inline-block text-[10px] font-bold text-accent uppercase tracking-widest px-3 py-1 bg-primary/5 border border-accent/20 rounded-full select-none w-fit">
               Premium Luxury
             </span>
+            <Link
+              to="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2 text-sm font-semibold text-text-primary hover:text-accent transition-colors py-2 border-t border-primary/5"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Admin Portal
+            </Link>
           </div>
         )}
       </header>
