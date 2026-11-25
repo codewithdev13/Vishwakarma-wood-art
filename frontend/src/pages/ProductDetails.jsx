@@ -51,7 +51,7 @@ const ProductDetails = ({ shortlist, onToggleShortlist }) => {
 
   const mainImage = images[activeImageIndex];
 
-  const isShortlisted = shortlist ? shortlist.some(item => item._id === product._id) : false;
+  const isShortlisted = Array.isArray(shortlist) && product ? shortlist.some(item => item && item._id === product._id) : false;
 
   const handleWhatsApp = () => {
     openWhatsAppEnquiry(product);

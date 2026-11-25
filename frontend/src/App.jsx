@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductDetails from './pages/ProductDetails';
 import Admin from './pages/Admin';
 import HeroLanding from './components/HeroLanding';
 import ProductCatalog from './components/ProductCatalog';
 import ShortlistDrawer from './components/ShortlistDrawer';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Set dynamic base URL for production APIs (Vercel) vs local dev
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
@@ -13,16 +14,18 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
 // Reusable storefront layout component
 const StorefrontLayout = ({
   children,
-  shortlist,
+  shortlist = [],
   setIsShortlistOpen,
   isAdmin,
   showAdminTable,
   setShowAdminTable,
   isMobileMenuOpen,
   setIsMobileMenuOpen,
-  products,
+  products = [],
   handleDeleteProduct
 }) => {
+  const safeShortlist = Array.isArray(shortlist) ? shortlist : [];
+  const safeProducts = Array.isArray(products) ? products : [];
   return (
     <div className="min-h-screen flex flex-col bg-background relative text-text-primary">
       {/* Admin Bar */}
@@ -69,9 +72,9 @@ const StorefrontLayout = ({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
               </svg>
               <span className="text-sm font-semibold">Shortlist</span>
-              {shortlist.length > 0 && (
+              {safeShortlist.length > 0 && (
                 <span className="absolute -top-1 -right-1.5 bg-rose-500 text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center animate-bounce shadow-sm">
-                  {shortlist.length}
+                  {safeShortlist.length}
                 </span>
               )}
             </button>
@@ -100,9 +103,9 @@ const StorefrontLayout = ({
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.2" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
               </svg>
-              {shortlist.length > 0 && (
+              {safeShortlist.length > 0 && (
                 <span className="absolute -top-0.5 -right-1 bg-rose-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-bounce shadow-sm">
-                  {shortlist.length}
+                  {safeShortlist.length}
                 </span>
               )}
             </button>
@@ -189,13 +192,13 @@ const StorefrontLayout = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map(p => (
+                  {safeProducts.map(p => (
                     <tr key={p._id} className="border-b border-primary/5 hover:bg-primary/5 transition-colors">
                       <td className="p-3">
                          <img src={(p.images && p.images.length > 0) ? p.images[0] : p.imageUrl} alt={p.name} className="w-12 h-12 rounded-lg object-cover border border-primary/10 bg-background" />
                       </td>
                       <td className="p-4 font-medium text-text-primary">{p.name}</td>
-                      <td className="p-4 font-bold text-primary">₹{p.price.toLocaleString('en-IN')}</td>
+                      <td className="p-4 font-bold text-primary">₹{p.price ? p.price.toLocaleString('en-IN') : '0'}</td>
                       <td className="p-4 text-text-muted">
                          <span className="px-2.5 py-1 bg-background border border-primary/10 text-primary rounded-md text-xs font-medium">{p.woodType}</span>
                       </td>
@@ -209,7 +212,7 @@ const StorefrontLayout = ({
                       </td>
                     </tr>
                   ))}
-                  {products.length === 0 && (
+                  {safeProducts.length === 0 && (
                     <tr><td colSpan="5" className="p-8 text-center text-text-muted">Inventory is empty.</td></tr>
                   )}
                 </tbody>
@@ -235,25 +238,33 @@ function App() {
   useEffect(() => {
     setIsAdmin(!!sessionStorage.getItem('adminToken'));
     
-    // Load shortlist from localStorage
+    // Load shortlist from localStorage safely
     const saved = localStorage.getItem('wood_art_shortlist');
     if (saved) {
       try {
-        setShortlist(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setShortlist(parsed);
+        } else {
+          setShortlist([]);
+        }
       } catch (err) {
         console.error('Failed to parse shortlist from localStorage:', err);
+        setShortlist([]);
       }
     }
   }, []);
 
   const handleToggleShortlist = (product) => {
+    if (!product || !product._id) return;
     setShortlist(prev => {
-      const exists = prev.some(item => item._id === product._id);
+      const current = Array.isArray(prev) ? prev : [];
+      const exists = current.some(item => item && item._id === product._id);
       let updated;
       if (exists) {
-        updated = prev.filter(item => item._id !== product._id);
+        updated = current.filter(item => item && item._id !== product._id);
       } else {
-        updated = [...prev, product];
+        updated = [...current, product];
       }
       localStorage.setItem('wood_art_shortlist', JSON.stringify(updated));
       return updated;
@@ -261,24 +272,28 @@ function App() {
   };
 
   const handleRemoveFromShortlist = (product) => {
+    if (!product || !product._id) return;
     setShortlist(prev => {
-      const updated = prev.filter(item => item._id !== product._id);
+      const current = Array.isArray(prev) ? prev : [];
+      const updated = current.filter(item => item && item._id !== product._id);
       localStorage.setItem('wood_art_shortlist', JSON.stringify(updated));
       return updated;
     });
   };
 
   const handleDeleteProduct = async (id) => {
+    if (!id) return;
     if (!window.confirm('Are you sure you want to delete this product?')) return;
     try {
       const token = sessionStorage.getItem('adminToken');
       await axios.delete(`/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setProducts(prev => prev.filter(p => p._id !== id));
+      setProducts(prev => (Array.isArray(prev) ? prev.filter(p => p && p._id !== id) : []));
       // Remove from shortlist if deleted
       setShortlist(prev => {
-        const updated = prev.filter(item => item._id !== id);
+        const current = Array.isArray(prev) ? prev : [];
+        const updated = current.filter(item => item && item._id !== id);
         localStorage.setItem('wood_art_shortlist', JSON.stringify(updated));
         return updated;
       });
@@ -290,52 +305,56 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={
-          <StorefrontLayout
-            shortlist={shortlist}
-            setIsShortlistOpen={setIsShortlistOpen}
-            isAdmin={isAdmin}
-            showAdminTable={showAdminTable}
-            setShowAdminTable={setShowAdminTable}
-            isMobileMenuOpen={isMobileMenuOpen}
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-            products={products}
-            handleDeleteProduct={handleDeleteProduct}
-          >
-            <HeroLanding />
-            <ProductCatalog 
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={
+            <StorefrontLayout
+              shortlist={shortlist}
+              setIsShortlistOpen={setIsShortlistOpen}
               isAdmin={isAdmin}
+              showAdminTable={showAdminTable}
+              setShowAdminTable={setShowAdminTable}
+              isMobileMenuOpen={isMobileMenuOpen}
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
               products={products}
-              setProducts={setProducts}
-              handleDeleteProductOutside={handleDeleteProduct}
+              handleDeleteProduct={handleDeleteProduct}
+            >
+              <HeroLanding />
+              <ProductCatalog 
+                isAdmin={isAdmin}
+                products={products}
+                setProducts={setProducts}
+                handleDeleteProductOutside={handleDeleteProduct}
+                shortlist={shortlist}
+                onToggleShortlist={handleToggleShortlist}
+              />
+            </StorefrontLayout>
+          } />
+          
+          <Route path="/product/:id" element={
+            <StorefrontLayout
               shortlist={shortlist}
-              onToggleShortlist={handleToggleShortlist}
-            />
-          </StorefrontLayout>
-        } />
-        
-        <Route path="/product/:id" element={
-          <StorefrontLayout
-            shortlist={shortlist}
-            setIsShortlistOpen={setIsShortlistOpen}
-            isAdmin={isAdmin}
-            showAdminTable={showAdminTable}
-            setShowAdminTable={setShowAdminTable}
-            isMobileMenuOpen={isMobileMenuOpen}
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-            products={products}
-            handleDeleteProduct={handleDeleteProduct}
-          >
-            <ProductDetails 
-              shortlist={shortlist}
-              onToggleShortlist={handleToggleShortlist}
-            />
-          </StorefrontLayout>
-        } />
-        
-        <Route path="/admin" element={<Admin />} />
-      </Routes>
+              setIsShortlistOpen={setIsShortlistOpen}
+              isAdmin={isAdmin}
+              showAdminTable={showAdminTable}
+              setShowAdminTable={setShowAdminTable}
+              isMobileMenuOpen={isMobileMenuOpen}
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
+              products={products}
+              handleDeleteProduct={handleDeleteProduct}
+            >
+              <ProductDetails 
+                shortlist={shortlist}
+                onToggleShortlist={handleToggleShortlist}
+              />
+            </StorefrontLayout>
+          } />
+          
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/Admin" element={<Navigate to="/admin" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ErrorBoundary>
 
       {/* Global Shortlist Drawer Panel */}
       <ShortlistDrawer

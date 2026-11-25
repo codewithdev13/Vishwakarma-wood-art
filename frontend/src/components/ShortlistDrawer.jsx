@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { openShortlistWhatsAppEnquiry } from '../utils/productShare';
 
-const ShortlistDrawer = ({ isOpen, onClose, shortlist, onRemove }) => {
+const ShortlistDrawer = ({ isOpen, onClose, shortlist = [], onRemove }) => {
+  const safeShortlist = Array.isArray(shortlist) ? shortlist : [];
+
   const handleWhatsAppEnquiry = () => {
-    if (shortlist.length === 0) return;
-    openShortlistWhatsAppEnquiry(shortlist);
+    if (safeShortlist.length === 0) return;
+    openShortlistWhatsAppEnquiry(safeShortlist);
   };
 
   return (
@@ -37,7 +39,7 @@ const ShortlistDrawer = ({ isOpen, onClose, shortlist, onRemove }) => {
             <h2 id="shortlist-title" className="text-2xl font-heading font-extrabold text-secondary flex items-center gap-2">
               My Shortlist
               <span className="text-sm font-sans font-medium px-2 py-0.5 bg-warm text-wood rounded-full border border-primary/20">
-                {shortlist.length} {shortlist.length === 1 ? 'item' : 'items'}
+                {safeShortlist.length} {safeShortlist.length === 1 ? 'item' : 'items'}
               </span>
             </h2>
             <p className="text-xs text-gray-500 mt-1 font-medium">Review saved items and enquire in bulk</p>
@@ -55,7 +57,7 @@ const ShortlistDrawer = ({ isOpen, onClose, shortlist, onRemove }) => {
 
         {/* List of items */}
         <div className="flex-grow overflow-y-auto p-6 space-y-4">
-          {shortlist.length === 0 ? (
+          {safeShortlist.length === 0 ? (
             <div className="h-full flex flex-col justify-center items-center text-center px-4">
               <div className="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mb-6 text-rose-300 border border-rose-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
@@ -74,7 +76,8 @@ const ShortlistDrawer = ({ isOpen, onClose, shortlist, onRemove }) => {
               </button>
             </div>
           ) : (
-            shortlist.map((item) => {
+            safeShortlist.map((item) => {
+              if (!item || !item._id) return null;
               const displayImage = (item.images && item.images.length > 0) ? item.images[0] : item.imageUrl;
               return (
                 <div
@@ -115,11 +118,11 @@ const ShortlistDrawer = ({ isOpen, onClose, shortlist, onRemove }) => {
         </div>
 
         {/* Footer actions */}
-        {shortlist.length > 0 && (
+        {safeShortlist.length > 0 && (
           <div className="p-6 bg-white border-t border-gray-200 shadow-2xl relative">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-semibold text-stone-500">Shortlisted Items</span>
-              <span className="text-lg font-bold text-stone-850">{shortlist.length}</span>
+              <span className="text-lg font-bold text-stone-850">{safeShortlist.length}</span>
             </div>
             <button
               onClick={handleWhatsAppEnquiry}

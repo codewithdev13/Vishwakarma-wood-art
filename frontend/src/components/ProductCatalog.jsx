@@ -27,9 +27,10 @@ const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOut
         if (selectedSize) params.append('size', selectedSize);
 
         const { data } = await axios.get(`/api/products?${params.toString()}`);
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -65,6 +66,9 @@ const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOut
       alert('Error deleting product');
     }
   };
+
+  const displayProducts = Array.isArray(products) ? products : [];
+  const displayShortlist = Array.isArray(shortlist) ? shortlist : [];
 
   return (
     <main id="product-catalog" className="w-full max-w-[1400px] mx-auto py-12 md:py-16 px-6 flex-grow flex flex-col md:flex-row gap-10 scroll-mt-20">
@@ -146,7 +150,7 @@ const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOut
       <div className="flex-grow">
         <div className="mb-6 flex justify-between items-end">
           <h2 className="text-2xl font-heading font-extrabold text-primary">
-            Collection <span className="text-text-muted font-sans font-normal text-base">({products.length} designs)</span>
+            Collection <span className="text-text-muted font-sans font-normal text-base">({displayProducts.length} designs)</span>
           </h2>
           <button 
             onClick={() => setIsFilterDrawerOpen(true)}
@@ -165,17 +169,19 @@ const ProductCatalog = ({ isAdmin, products, setProducts, handleDeleteProductOut
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <ProductCard 
-                key={product._id} 
-                product={product} 
-                isAdmin={isAdmin}
-                onDelete={() => handleDeleteProduct(product._id)}
-                isShortlisted={shortlist ? shortlist.some(item => item._id === product._id) : false}
-                onToggleShortlist={onToggleShortlist}
-              />
+            {displayProducts.map((product) => (
+              product && product._id ? (
+                <ProductCard 
+                  key={product._id} 
+                  product={product} 
+                  isAdmin={isAdmin}
+                  onDelete={() => handleDeleteProduct(product._id)}
+                  isShortlisted={displayShortlist.some(item => item && item._id === product._id)}
+                  onToggleShortlist={onToggleShortlist}
+                />
+              ) : null
             ))}
-            {products.length === 0 && (
+            {displayProducts.length === 0 && (
               <div className="col-span-full bg-background-alt rounded-2xl border border-primary/10 p-16 text-center">
                 <div className="text-primary/45 mb-4">
                   <svg className="mx-auto h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
