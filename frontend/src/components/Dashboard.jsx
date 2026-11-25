@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import { WOOD_TYPES, SIZES, TEMPLE_STYLES } from '../constants/productOptions';
@@ -85,14 +86,22 @@ const Dashboard = ({ setAuth }) => {
 
   return (
     <div className="max-w-4xl w-full bg-background border border-primary/10 shadow-xl rounded-[2.5rem] p-8 text-text-primary">
-      <div className="flex justify-between items-center mb-8 border-b border-primary/10 pb-4">
+      <div className="flex flex-wrap gap-4 justify-between items-center mb-8 border-b border-primary/10 pb-4">
         <h2 className="text-3xl font-heading font-extrabold text-primary">Admin Dashboard</h2>
-        <button
-          onClick={handleLogout}
-          className="text-xs font-bold uppercase tracking-wider px-4 py-2 border border-red-200 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all cursor-pointer"
-        >
-          Logout
-        </button>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/"
+            className="text-xs font-bold uppercase tracking-wider px-4 py-2 border border-primary/20 text-primary rounded-xl hover:bg-primary/5 transition-all flex items-center gap-1.5"
+          >
+            ← View Store
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="text-xs font-bold uppercase tracking-wider px-4 py-2 border border-red-200 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all cursor-pointer"
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="bg-background-alt p-6 rounded-2xl border border-primary/10">
