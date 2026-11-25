@@ -10,27 +10,37 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const admin = await Admin.findOne({ username });
+    const cleanUsername = username ? String(username).trim().toLowerCase() : '';
+    const cleanPassword = password ? String(password).trim() : '';
 
-    if (admin && (await admin.matchPassword(password))) {
-      // Create token
+    if (!cleanUsername || !cleanPassword) {
+      return res.status(400).json({ message: 'Please provide both username and password' });
+    }
+
+    const admin = await Admin.findOne({ 
+      username: { $regex: new RegExp(`^${cleanUsername}$`, 'i') } 
+    });
+
+    if (admin && (await admin.matchPassword(cleanPassword))) {
+      // Create token with resilient fallback secret
+      const jwtSecret = process.env.JWT_SECRET || 'vishwakarma_wood_art_secure_jwt_token_2026';
       const token = jwt.sign(
         { id: admin._id, username: admin.username },
-        process.env.JWT_SECRET,
+        jwtSecret,
         { expiresIn: '30d' }
       );
 
-      res.json({
+      return res.json({
         _id: admin._id,
         username: admin.username,
         token,
       });
     } else {
-      res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error' });
+    console.error('Login error:', error);
+    return res.status(500).json({ message: error.message || 'Server Error' });
   }
 });
 
